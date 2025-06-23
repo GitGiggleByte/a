@@ -81,20 +81,7 @@ RETURN
         Metrics[Date] = LatestDate
     )
 
-✅ 2. Create a measure for total licenses:
-
-Total Licenses = 
-MAX('Product Metadata'[Total Licenses])
-
-    💡 This works because there's a relationship between tables—so as long as you're filtering by product (like in a matrix), this pulls in the correct total.
-
-✅ 3. Remaining licenses:
-
-Remaining Licenses = 
-[Total Licenses] - [Latest Used Licenses]
-
-
-
+2. Create a measure for total licenses:
 
 Total Licenses (Correct) =
 LOOKUPVALUE(
@@ -103,6 +90,15 @@ LOOKUPVALUE(
     SELECTEDVALUE('Metrics'[Product])
 )
 
+3. Remaining licenses:
+
+Remaining Licenses = 
+[Total Licenses] - [Latest Used Licenses]
+
+4. COntract end date
+
+Contract End Date Display = 
+MAX(metadata[Contract End Date])
 
 
 
