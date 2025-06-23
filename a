@@ -95,10 +95,11 @@ LOOKUPVALUE(
 Remaining Licenses = 
 [Total Licenses] - [Latest Used Licenses]
 
-4. COntract end date
 
-Contract End Date Display = 
-MAX(metadata[Contract End Date])
+4. COntract end date - calculated column
+
+Contract End Date Display = FORMAT('Product Metadata'[Contract End Date], "M/d/yyyy")
+
 
 
 
