@@ -96,13 +96,12 @@ Remaining Licenses =
 
 
 
-Total Licenses (Per Product) =
-CALCULATE(
-    MAX('Product Metadata'[Total Licenses]),
-    VALUES('Product Metadata'[Product])
+Total Licenses (Correct) =
+LOOKUPVALUE(
+    'Product Metadata'[Total Licenses],
+    'Product Metadata'[Product],
+    SELECTEDVALUE('Metrics'[Product])
 )
-
-
 
 
 
