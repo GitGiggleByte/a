@@ -19,3 +19,12 @@ RETURN
 
 
 Remaining Licenses = RELATED('Product Metadata'[Total Licenses]) - 'Metrics'[Value]
+
+
+
+Remaining Licenses = 
+IF(
+   'Metrics'[Metric Type] = "Used Licenses",
+   RELATED('Product Metadata'[Total Licenses]) - 'Metrics'[Value],
+   BLANK()
+)
