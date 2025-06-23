@@ -108,7 +108,8 @@ CALCULATE(
 )
 
 
-
+Contract End Date (from Metadata) = 
+RELATED('Metadata'[Contract End Date])
 
 
 
