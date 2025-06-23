@@ -1,0 +1,13 @@
+Remaining Licenses = 
+VAR TotalLicenses =
+    CALCULATE(
+        SUM('Metrics'[Value]),
+        'Metrics'[Metric Type] = "Total Licenses"
+    )
+VAR UsedLicenses =
+    CALCULATE(
+        SUM('Metrics'[Value]),
+        'Metrics'[Metric Type] = "Used Licenses"
+    )
+RETURN
+    TotalLicenses - UsedLicenses
