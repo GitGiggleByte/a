@@ -28,3 +28,57 @@ IF(
    RELATED('Product Metadata'[Total Licenses]) - 'Metrics'[Value],
    BLANK()
 )
+
+=======================================================================================
+TEP 1: Create a Measure to Get Latest Date Per Product
+
+In the Metrics table:
+
+Latest Date Per Product = 
+CALCULATE(
+    MAX('Metrics'[Date]),
+    ALLEXCEPT('Metrics', 'Metrics'[Product])
+)
+
+STEP 2: Create a Filtered Measure for Used Licenses on Latest Date
+
+Latest Used Licenses = 
+CALCULATE(
+    MAX('Metrics'[Value]),
+    FILTER(
+        'Metrics',
+        'Metrics'[Metric Type] = "Used Licenses"
+        && 'Metrics'[Date] = [Latest Date Per Product]
+    )
+)
+
+
+STEP 3: Create a Measure for Remaining Licenses on Latest Date
+
+Latest Remaining Licenses = 
+CALCULATE(
+    RELATED('Product Metadata'[Total Licenses]) - MAX('Metrics'[Value]),
+    FILTER(
+        'Metrics',
+        'Metrics'[Metric Type] = "Used Licenses"
+        && 'Metrics'[Date] = [Latest Date Per Product]
+    )
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
