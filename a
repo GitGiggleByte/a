@@ -101,15 +101,50 @@ Remaining Licenses =
 Contract End Date Display = FORMAT('Product Metadata'[Contract End Date], "M/d/yyyy")
 
 
-Contract End Date Display = 
-CALCULATE(
-    MAX('Product Metadata'[Contract End Date]),
-    ALLEXCEPT('Product Metadata', 'Product Metadata'[Product])
-)
+Contract End Date Display (add o Metrics table) = 
 
 
 Contract End Date (from Metadata) = 
 RELATED('Metadata'[Contract End Date])
+
+======================================================================================
+
+Step-by-Step to Add Delta Measure
+
+    Create a measure that calculates the previous month's value:
+
+Previous Month Usage = 
+CALCULATE(
+    SUM(Metrics[Value]),
+    FILTER(
+        Metrics,
+        Metrics[Metric Type] = "Used Licenses"
+    ),
+    PREVIOUSMONTH(Metrics[Date])
+)
+
+Create the delta measure:
+
+License Usage Delta = 
+VAR Current = 
+    CALCULATE(
+        SUM(Metrics[Value]),
+        FILTER(
+            Metrics,
+            Metrics[Metric Type] = "Used Licenses"
+        )
+    )
+VAR Previous = 
+    CALCULATE(
+        SUM(Metrics[Value]),
+        FILTER(
+            Metrics,
+            Metrics[Metric Type] = "Used Licenses"
+        ),
+        PREVIOUSMONTH(Metrics[Date])
+    )
+RETURN
+    IF(NOT ISBLANK(Previous), Current - Previous)
 
 
 
