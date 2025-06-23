@@ -11,3 +11,11 @@ VAR UsedLicenses =
     )
 RETURN
     TotalLicenses - UsedLicenses
+
+
+
+=======================================================================================
+
+
+
+Remaining Licenses = RELATED('Product Metadata'[Total Licenses]) - 'Metrics'[Value]
