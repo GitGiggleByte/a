@@ -101,6 +101,11 @@ Remaining Licenses =
 Contract End Date Display = FORMAT('Product Metadata'[Contract End Date], "M/d/yyyy")
 
 
+Contract End Date Display = 
+CALCULATE(
+    MAX('Product Metadata'[Contract End Date]),
+    ALLEXCEPT('Product Metadata', 'Product Metadata'[Product])
+)
 
 
 
