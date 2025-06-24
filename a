@@ -163,6 +163,15 @@ CALCULATE(
 )
 
 
+Latest Usage Date Per Product = 
+CALCULATE(
+    MAX(Metrics[Date]),
+    FILTER(
+        Metrics,
+        NOT(ISBLANK(Metrics[Usage]))
+    )
+)
+
 
 
 
