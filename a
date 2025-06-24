@@ -124,23 +124,32 @@ CALCULATE(
 )
 
 Create the delta measure:
-
 License Usage Delta = 
-VAR CurrentMonth =
+VAR CurrentDate = MAX(Metrics[Date])
+VAR PreviousDate =
     CALCULATE(
-        SUM(Metrics[Value]),
-        Metrics[Metric Type] = "Used Licenses"
+        MAX(Metrics[Date]),
+        FILTER(
+            ALL(Metrics[Date]),
+            Metrics[Date] < CurrentDate
+        )
     )
-VAR PreviousMonth =
+VAR CurrentValue =
     CALCULATE(
         SUM(Metrics[Value]),
         Metrics[Metric Type] = "Used Licenses",
-        PREVIOUSMONTH(Metrics[Date])
+        Metrics[Date] = CurrentDate
+    )
+VAR PreviousValue =
+    CALCULATE(
+        SUM(Metrics[Value]),
+        Metrics[Metric Type] = "Used Licenses",
+        Metrics[Date] = PreviousDate
     )
 RETURN
     IF(
-        NOT ISBLANK(PreviousMonth),
-        CurrentMonth - PreviousMonth
+        NOT ISBLANK(PreviousValue),
+        CurrentValue - PreviousValue
     )
 
 
