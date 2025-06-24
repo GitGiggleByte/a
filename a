@@ -1,21 +1,30 @@
 Last Usage Date = 
+MAXX(
+    FILTER(
+        Metrics,
+        Metrics[Metric Type] = "Used Licenses"
+    ),
+    Metrics[Date]
+)
+
+
+
+
+
+
+
+If we switch to a column instead of a measure, it will respect product-level row context and give the right result:
+
+    Go to the Metrics table.
+
+    Create a new column, not a measure:
+
+Latest Usage Date Per Product = 
 CALCULATE(
     MAX(Metrics[Date]),
     FILTER(
         Metrics,
         Metrics[Metric Type] = "Used Licenses"
             && Metrics[Product] = EARLIER(Metrics[Product])
-    )
-)
-
-    💡 If EARLIER() causes issues (especially in measures, not columns), use this instead:
-
-Last Usage Date = 
-CALCULATE(
-    MAX(Metrics[Date]),
-    FILTER(
-        Metrics,
-        Metrics[Metric Type] = "Used Licenses"
-            && Metrics[Product] = MAX(Metrics[Product])
     )
 )
