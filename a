@@ -155,11 +155,15 @@ RETURN
 
 
 Latest Usage Date Per Product = 
-MAXX(
+VAR currentProduct = MAX(Metrics[Product])
+RETURN
+CALCULATE(
+    MAX(Metrics[Date]),
     FILTER(
         Metrics,
+        Metrics[Product] = currentProduct &&
         NOT(ISBLANK(Metrics[Usage]))
-    ),
-    Metrics[Date]
+    )
 )
+
 
