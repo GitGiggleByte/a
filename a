@@ -140,3 +140,19 @@ RETURN
         NOT ISBLANK(PreviousValue),
         CurrentValue - PreviousValue
     )
+
+
+
+Formatted License Usage Delta = 
+VAR Delta = [License Usage Delta]
+RETURN
+    IF(
+        NOT ISBLANK(Delta),
+        IF(Delta > 0, "+" & FORMAT(Delta, "#,##0"), FORMAT(Delta, "#,##0"))
+    )
+
+
+
+
+
+
