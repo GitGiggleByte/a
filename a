@@ -151,6 +151,16 @@ RETURN
         IF(Delta > 0, "+" & FORMAT(Delta, "#,##0"), FORMAT(Delta, "#,##0"))
     )
 
+========================================================================================
+
+Latest Usage Date = 
+CALCULATE(
+    MAX(Metrics[Date]),
+    FILTER(
+        Metrics,
+        NOT(ISBLANK(Metrics[Usage]))
+    )
+)
 
 
 
