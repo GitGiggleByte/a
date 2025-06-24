@@ -219,3 +219,43 @@ CALCULATE(
 )
 
 
+
+
+
+
+License Usage Delta = 
+VAR CurrentDate = MAX(Metrics[Date])
+VAR PreviousDate =
+    CALCULATE(
+        MAX(Metrics[Date]),
+        FILTER(
+            ALL(Metrics),
+            Metrics[Product] = MAX(Metrics[Product]) &&
+            Metrics[Date] < CurrentDate
+        )
+    )
+VAR CurrentUsage =
+    CALCULATE(
+        MAX(Metrics[Usage]),
+        FILTER(
+            Metrics,
+            Metrics[Product] = MAX(Metrics[Product]) &&
+            Metrics[Date] = CurrentDate
+        )
+    )
+VAR PreviousUsage =
+    CALCULATE(
+        MAX(Metrics[Usage]),
+        FILTER(
+            Metrics,
+            Metrics[Product] = MAX(Metrics[Product]) &&
+            Metrics[Date] = PreviousDate
+        )
+    )
+RETURN
+IF(
+    ISBLANK(CurrentUsage) || ISBLANK(PreviousUsage),
+    BLANK(),
+    CurrentUsage - PreviousUsage
+)
+
