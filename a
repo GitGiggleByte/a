@@ -153,25 +153,15 @@ RETURN
 
 ========================================================================================
 
-Latest Usage Date = 
-CALCULATE(
-    MAX(Metrics[Date]),
-    FILTER(
-        Metrics,
-        NOT(ISBLANK(Metrics[Usage]))
-    )
-)
-
 
 Latest Usage Date Per Product = 
 CALCULATE(
     MAX(Metrics[Date]),
     FILTER(
         Metrics,
-        NOT(ISBLANK(Metrics[Usage]))
+        NOT(ISBLANK(Metrics[Usage])) &&
+        Metrics[Product] = SELECTEDVALUE(Metrics[Product])
     )
 )
-
-
 
 
