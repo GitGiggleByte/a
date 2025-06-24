@@ -113,17 +113,6 @@ Step-by-Step to Add Delta Measure
 
     Create a measure that calculates the previous month's value:
 
-Previous Month Usage = 
-CALCULATE(
-    SUM(Metrics[Value]),
-    FILTER(
-        Metrics,
-        Metrics[Metric Type] = "Used Licenses"
-    ),
-    PREVIOUSMONTH(Metrics[Date])
-)
-
-Create the delta measure:
 License Usage Delta = 
 VAR CurrentDate = MAX(Metrics[Date])
 VAR PreviousDate =
@@ -151,6 +140,3 @@ RETURN
         NOT ISBLANK(PreviousValue),
         CurrentValue - PreviousValue
     )
-
-
-
