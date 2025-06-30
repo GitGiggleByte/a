@@ -1,1 +1,16 @@
 Total Products = DISTINCTCOUNT(Product_Metadata[Product])
+
+
+
+-------------------
+
+
+
+
+
+Display Product Line = 
+IF(
+    HASONEVALUE(Product_Metadata[CDO Product Line]),
+    SELECTEDVALUE(Product_Metadata[CDO Product Line]),
+    "CDO"
+)
