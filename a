@@ -7,15 +7,19 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 Display Product Owner = 
 IF(
     HASONEVALUE(Product_Metadata[Product Owner]),
-    SELECTEDVALUE(Product_Metadata[Product Owner])
+    SELECTEDVALUE(Product_Metadata[Product Owner]),
+    BLANK()
 )
+
 
 
 Display Product = 
 IF(
     HASONEVALUE(Product_Metadata[Product]),
-    SELECTEDVALUE(Product_Metadata[Product])
+    SELECTEDVALUE(Product_Metadata[Product]),
+    BLANK()
 )
+
 
 
 
