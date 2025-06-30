@@ -8,6 +8,20 @@ Smart Alerts Logic
 
 
 % Licenses Used = 
+VAR SelectedProduct = VALUES(Product_Metadata[Product])
+VAR TotalUsage = 
+    CALCULATE(
+        SUM(License_Usage[Usage]),
+        License_Usage[Product] IN SelectedProduct
+    )
+RETURN
+    DIVIDE(TotalUsage, MAX(Product_Metadata[Total Licenses]))
+
+
+
+
+
+% Licenses Used = 
 VAR TotalUsage = 
     CALCULATE(
         SUM(License_Usage[Usage]),
