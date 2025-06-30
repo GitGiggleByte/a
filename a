@@ -6,8 +6,32 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 Smart Alerts Logic
 
-
 % Licenses Used = 
+VAR SelectedProduct = VALUES(Product_Metadata[Product])
+
+VAR LatestDate =
+    CALCULATE(
+        MAX(License_Usage[Date]),
+        FILTER(
+            License_Usage,
+            License_Usage[Product] IN SelectedProduct
+        )
+    )
+
+VAR LatestUsage =
+    CALCULATE(
+        SUM(License_Usage[Usage]),
+        FILTER(
+            License_Usage,
+            License_Usage[Product] IN SelectedProduct
+                && License_Usage[Date] = LatestDate
+        )
+    )
+
+RETURN
+    DIVIDE(LatestUsage, MAX(Product_Metadata[Total Licenses]))
+
+/*% Licenses Used = 
 VAR SelectedProduct = VALUES(Product_Metadata[Product])
 VAR TotalUsage = 
     CALCULATE(
@@ -15,7 +39,7 @@ VAR TotalUsage =
         License_Usage[Product] IN SelectedProduct
     )
 RETURN
-    DIVIDE(TotalUsage, MAX(Product_Metadata[Total Licenses]))
+    DIVIDE(TotalUsage, MAX(Product_Metadata[Total Licenses]))*/
 
 
 
