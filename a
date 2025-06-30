@@ -15,6 +15,16 @@ RETURN
 
 
 
+Display Product Owner =
+IF(
+    HASONEFILTER(Product_Metadata[Product Owner]),
+    SELECTEDVALUE(Product_Metadata[Product Owner]),
+    BLANK()
+)
+
+
+
+
 
 Display Product = 
 VAR SelectedProduct = SELECTEDVALUE(Product_Metadata[Product])
@@ -25,6 +35,13 @@ RETURN
         BLANK()
     )
 
+
+Display Product =
+IF(
+    HASONEFILTER(Product_Metadata[Product]),
+    SELECTEDVALUE(Product_Metadata[Product]),
+    BLANK()
+)
 
 
 
