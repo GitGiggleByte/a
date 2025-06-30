@@ -7,6 +7,15 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 
 
+Smart Total Products = 
+IF(
+    HASONEVALUE(Product_Metadata[Product]),
+    BLANK(),
+    DISTINCTCOUNT(Product_Metadata[Product])
+)
+
+
+***
 
 Display Product Line = 
 IF(
