@@ -64,6 +64,12 @@ CALCULATE(
     [Percent Licenses Used] > 0.9
 )
 
+ShowTotalProductsCard =
+IF(
+    [SlicerDepth] <= 3,
+    CALCULATE([Total Products]),
+    BLANK()
+)
 
 
 
