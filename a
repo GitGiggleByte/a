@@ -3,92 +3,14 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 
 -------------------
-
-ShowTotalProductsCard =
-SWITCH(
-    TRUE(),
-    [SlicerDepth] IN {0, 1, 2}, 1,
-    [SlicerDepth] = 3, 0,
-    0
-)
+Display Product Owner =
+VAR SelectedOwner = SELECTEDVALUE('Product_Metadata'[Product Owner])
+RETURN IF(ISBLANK(SelectedOwner), " ", SelectedOwner)
 
 
-
-
-
-SlicerDepth =
-VAR LineSelected = NOT ISFILTERED('Product Metadata'[Product Line])
-VAR OwnerSelected = NOT ISFILTERED('Product Metadata'[Product Owner])
-VAR ProductSelected = NOT ISFILTERED('Product Metadata'[Product])
-RETURN
-4 - (INT(LineSelected) + INT(OwnerSelected) + INT(ProductSelected))
-
-
-
-
-ShowCDOCard =
-IF(
-    [SlicerDepth] = 1,
-    1,
-    BLANK()
-)
-
-
-ShowProductLineCard =
-IF(
-    [SlicerDepth] >= 2,
-    CALCULATE(SELECTEDVALUE('Product Metadata'[Product Line])),
-    BLANK()
-)
-
-
-ShowProductOwnerCard =
-IF(
-    [SlicerDepth] >= 3,
-    CALCULATE(SELECTEDVALUE('Product Metadata'[Product Owner])),
-    BLANK()
-)
-
-
-ShowProductCard =
-IF(
-    [SlicerDepth] = 4,
-    CALCULATE(SELECTEDVALUE('Product Metadata'[Product])),
-    BLANK()
-)
-
-
-ShowAlertsCard = 
-VAR SlicerDepth = [SlicerDepth]  -- Assuming this measure returns values from 0 to 3
-VAR AlertValue = [AlertCount]    -- Safe to use directly if AlertCount is a measure
-RETURN
-IF (
-    SlicerDepth >= 0 && AlertValue > 0,
-    1,
-    0
-)
-
-
-AlertCount = 
-CALCULATE(
-    COUNTROWS('License_Usage'),
-    [Percent Licenses Used] > 0.9
-)
-
-ShowTotalProductsCard =
-IF(
-    [SlicerDepth] <= 3,
-    CALCULATE([Total Products]),
-    BLANK()
-)
-
-
-
-SmartAlertCount = 
-CALCULATE(
-    COUNTROWS(License_Usage),
-    [Percent Licenses Used] > 0.9
-)
+Display Product =
+VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
+RETURN IF(ISBLANK(SelectedProduct), " ", SelectedProduct)
 
 
 
