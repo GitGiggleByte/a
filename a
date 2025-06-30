@@ -19,23 +19,9 @@ RETURN
 
 
 
-
-
-% Licenses Used = 
-VAR TotalUsage = 
-    CALCULATE(
-        SUM(License_Usage[Usage]),
-        FILTER(
-            License_Usage,
-            License_Usage[Product] = Product_Metadata[Product]
-        )
-    )
-RETURN
-    DIVIDE(TotalUsage, Product_Metadata[Total Licenses])
-
-
 License Alert = 
 IF([% Licenses Used] > 0.9, 1, 0)
+
 
 
 Smart Alert Count = 
