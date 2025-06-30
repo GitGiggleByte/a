@@ -4,6 +4,58 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 -------------------
 
+
+SlicerDepth =
+VAR ProductSelected = HASONEVALUE(Product_Metadata[Product])
+VAR OwnerSelected = HASONEVALUE(Product_Metadata[Product Owner])
+VAR LineSelected = HASONEVALUE(Product_Metadata[CDO Product Line])
+RETURN
+SWITCH(
+    TRUE(),
+    ProductSelected, 4,
+    OwnerSelected, 3,
+    LineSelected, 2,
+    1
+)
+
+
+
+ShowTotalProductsCard =
+IF([SlicerDepth] <= 3, [Total Products], BLANK())
+
+
+ShowProductCard =
+IF([SlicerDepth] = 4, SELECTEDVALUE(Product_Metadata[Product]), BLANK())
+
+
+ShowCDOCard =
+IF([SlicerDepth] = 1, "CDO Overview", BLANK())
+
+
+ShowProductLineCard =
+IF([SlicerDepth] >= 2, SELECTEDVALUE(Product_Metadata[CDO Product Line]), BLANK())
+
+
+ShowProductOwnerCard =
+IF([SlicerDepth] >= 3, SELECTEDVALUE(Product_Metadata[Product Owner]), BLANK())
+
+
+SmartAlertCount = 
+CALCULATE(
+    COUNTROWS(License_Usage),
+    [Percent Licenses Used] > 0.9
+)
+
+
+
+
+
+======
+
+
+
+
+
 Display Product Owner = 
 VAR SelectedOwner = SELECTEDVALUE(Product_Metadata[Product Owner])
 RETURN
