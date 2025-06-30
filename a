@@ -1,8 +1,8 @@
-Latest Usage Date Per Product = 
-CALCULATE(
-    MAX(Metrics[Date]),
-    FILTER(
-        Metrics,
-        Metrics[Metric Type] = "Used Licenses"
-    )
+CalendarTable = 
+ADDCOLUMNS (
+    CALENDAR (DATE(2023,1,1), DATE(2025,12,31)),
+    "Year", YEAR([Date]),
+    "Month", FORMAT([Date], "MMMM"),
+    "MonthNumber", MONTH([Date]),
+    "YearMonth", FORMAT([Date], "YYYY-MM")
 )
