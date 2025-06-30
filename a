@@ -5,21 +5,26 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 -------------------
 
 Display Product Owner = 
-IF(
-    ISFILTERED(Product_Metadata[Product Owner]) && HASONEVALUE(Product_Metadata[Product Owner]),
-    SELECTEDVALUE(Product_Metadata[Product Owner]),
-    BLANK()
-)
+VAR SelectedOwner = SELECTEDVALUE(Product_Metadata[Product Owner])
+RETURN
+    IF(
+        ISFILTERED(Product_Metadata[Product Owner]) && NOT(ISBLANK(SelectedOwner)),
+        SelectedOwner,
+        BLANK()
+    )
 
 
 
 
 Display Product = 
-IF(
-    ISFILTERED(Product_Metadata[Product]) && HASONEVALUE(Product_Metadata[Product]),
-    SELECTEDVALUE(Product_Metadata[Product]),
-    BLANK()
-)
+VAR SelectedProduct = SELECTEDVALUE(Product_Metadata[Product])
+RETURN
+    IF(
+        ISFILTERED(Product_Metadata[Product]) && NOT(ISBLANK(SelectedProduct)),
+        SelectedProduct,
+        BLANK()
+    )
+
 
 
 
