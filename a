@@ -4,7 +4,49 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 -------------------
 
+Smart Alerts Logic
 
+
+% Licenses Used = 
+VAR TotalUsage = 
+    CALCULATE(
+        SUM(License_Usage[Usage]),
+        FILTER(
+            License_Usage,
+            License_Usage[Product] = Product_Metadata[Product]
+        )
+    )
+RETURN
+    DIVIDE(TotalUsage, Product_Metadata[Total Licenses])
+
+
+License Alert = 
+IF([% Licenses Used] > 0.9, 1, 0)
+
+
+Smart Alert Count = 
+CALCULATE(
+    COUNTROWS(Product_Metadata),
+    FILTER(
+        Product_Metadata,
+        [% Licenses Used] > 0.9
+    )
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***
 
 
 Smart Total Products = 
