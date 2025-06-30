@@ -4,6 +4,17 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 -------------------
 
+ShowTotalProductsCard =
+SWITCH(
+    TRUE(),
+    [SlicerDepth] IN {0, 1, 2}, 1,
+    [SlicerDepth] = 3, 0,
+    0
+)
+
+
+
+
 
 SlicerDepth =
 VAR LineSelected = NOT ISFILTERED('Product Metadata'[Product Line])
