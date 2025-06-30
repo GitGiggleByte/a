@@ -47,12 +47,23 @@ IF(
 )
 
 
-ShowAlertsCard =
-IF(
-    [SlicerDepth] <= 4,
-    CALCULATE([Alert Count]),
-    BLANK()
+ShowAlertsCard = 
+VAR SlicerDepth = [SlicerDepth]  -- Assuming this measure returns values from 0 to 3
+VAR AlertValue = [AlertCount]    -- Safe to use directly if AlertCount is a measure
+RETURN
+IF (
+    SlicerDepth >= 0 && AlertValue > 0,
+    1,
+    0
 )
+
+
+AlertCount = 
+CALCULATE(
+    COUNTROWS('License_Usage'),
+    [Percent Licenses Used] > 0.9
+)
+
 
 
 
