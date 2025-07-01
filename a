@@ -4,38 +4,41 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 -------------------
 Smart Total Products :=
-VAR ProductLineSelected =
-    ISFILTERED('Product_Metadata'[Product Line])
-VAR ProductSelected =
-    HASONEVALUE('Product_Metadata'[Product])
+VAR ProductLineSelected = ISFILTERED('Product_Metadata'[Product Line])
+VAR ProductOwnerSelected = ISFILTERED('Product_Metadata'[Product Owner])
 RETURN
     IF (
-        NOT ProductLineSelected && NOT ProductSelected,
+        NOT ProductLineSelected && NOT ProductOwnerSelected,
         BLANK(),
-        CALCULATE (
-            DISTINCTCOUNT('Product_Metadata'[Product])
+        COALESCE (
+            CALCULATE (
+                DISTINCTCOUNT('Product_Metadata'[Product])
+            ),
+            0
         )
     )
+
+
 
 Smart Alert Count :=
-VAR ProductLineSelected =
-    ISFILTERED('Product_Metadata'[Product Line])
-VAR ProductSelected =
-    HASONEVALUE('Product_Metadata'[Product])
+VAR ProductLineSelected = ISFILTERED('Product_Metadata'[Product Line])
+VAR ProductOwnerSelected = ISFILTERED('Product_Metadata'[Product Owner])
 RETURN
     IF (
-        NOT ProductLineSelected && NOT ProductSelected,
+        NOT ProductLineSelected && NOT ProductOwnerSelected,
         BLANK(),
-        CALCULATE (
-            COUNTROWS (
-                FILTER (
-                    'Product_Metadata',
-                    [% Licenses Used] > 0.9
+        COALESCE (
+            CALCULATE (
+                COUNTROWS (
+                    FILTER (
+                        'Product_Metadata',
+                        [% Licenses Used] > 0.9
+                    )
                 )
-            )
+            ),
+            0
         )
     )
-
 
 
 
