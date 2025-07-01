@@ -6,6 +6,21 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 
 
+Latest Usage Date = 
+CALCULATE(
+    MAX('License_Usage'[Date]),
+    REMOVEFILTERS('CalendarTable'),
+    VALUES('License_Usage'[Product])
+)
+
+
+
+
+
+
+****************
+
+
 Latest Usage =
 VAR MaxVisibleDate =
     CALCULATE(
