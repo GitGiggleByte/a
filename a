@@ -3,6 +3,40 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 
 -------------------
+
+
+
+
+
+
+Latest Usage = 
+VAR LatestDate =
+    CALCULATE(
+        MAX('Calendar'[Date]),
+        ALLSELECTED('Calendar')
+    )
+RETURN
+    CALCULATE(
+        SUM('Usage_Fact'[Usage]),
+        'Calendar'[Date] = LatestDate
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+******
+
+
+
 Smart Total Products :=
 COALESCE (
     CALCULATE (
