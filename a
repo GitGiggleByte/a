@@ -6,6 +6,25 @@ Total Products = DISTINCTCOUNT(Product_Metadata[Product])
 
 
 
+Latest Usage = 
+VAR LatestDate =
+    CALCULATE(
+        MAX('CalendarTable'[Date]),
+        ALLSELECTED('CalendarTable')
+    )
+RETURN
+    CALCULATE(
+        SUM('License_Usage'[Usage]),
+        FILTER(
+            'License_Usage',
+            'License_Usage'[Date] = LatestDate
+        )
+    )
+
+
+
+
+
 
 
 
