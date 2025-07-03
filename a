@@ -1,1 +1,6 @@
-MonthSort = YEAR('CalendarTable'[Date]) * 100 + MONTH('CalendarTable'[Date])
+Product Selected Check =
+IF (
+    HASONEVALUE ( 'License_Usage'[Product] ),
+    TRUE(),
+    FALSE()
+)
