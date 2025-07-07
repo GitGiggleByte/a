@@ -55,4 +55,14 @@ Remove ShowTrendLine Filter from the Visual
     We no longer need to filter the visual itself — the measure does all the work
 
 
+License Usage by Day (Filtered) = 
+VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
+RETURN
+IF (
+    NOT ISBLANK(SelectedProduct),
+    CALCULATE (
+        SUM('License_Usage'[Usage]),
+        TREATAS( { SelectedProduct }, 'License_Usage'[Product] )
+    )
+)
 
