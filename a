@@ -66,3 +66,12 @@ IF (
     )
 )
 
+
+
+Product Filter Gate = 
+IF (
+    HASONEVALUE('Product_Metadata'[Product]),
+    SELECTEDVALUE('Product_Metadata'[Product]),
+    BLANK()
+)
+
