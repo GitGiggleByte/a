@@ -9,13 +9,6 @@ IF(
 
 
 
-
-
-
-
-
-
-
 ShowTrendLine = 
 IF(
     ISFILTERED('Product_Metadata'[Product]),
@@ -25,9 +18,21 @@ IF(
 
 
 
+ShowTrendLine =
+IF(
+    HASONEVALUE('Product_Metadata'[Product]),
+    1,
+    BLANK()
+)
 
 
 
+ShowTrendLine =
+IF (
+    HASONEVALUE('License_Usage'[Product]),
+    1,
+    BLANK()
+)
 
 
 
