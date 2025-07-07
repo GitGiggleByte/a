@@ -1,3 +1,7 @@
+ShowTrendLine in License_Usage table
+
+WORKED but nothing displayed
+
 ShowTrendLine = 
 IF (
     HASONEFILTER('License_Usage'[Product]) &&
@@ -7,7 +11,7 @@ IF (
 )
 
 
-
+DIDN'T WORK as a try to improve the above. All products were displayed.
 
 
 ShowTrendLine = 
@@ -24,3 +28,31 @@ IF (
     1,
     BLANK()
 )
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+NEW APPROACH
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+
+License Usage by Day (Filtered) =
+VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
+RETURN
+IF (
+    NOT ISBLANK(SelectedProduct),
+    CALCULATE (
+        SUM('License_Usage'[Usage]),
+        'License_Usage'[Product] = SelectedProduct
+    )
+)
+
+
+Remove ShowTrendLine Filter from the Visual
+
+    Delete ShowTrendLine from the Filters on this visual
+
+    We no longer need to filter the visual itself — the measure does all the work
+
+
+
