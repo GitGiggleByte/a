@@ -75,3 +75,16 @@ IF (
     BLANK()
 )
 
+
+
+
+Trend Chart Title = 
+VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
+RETURN
+IF (
+    NOT ISBLANK(SelectedProduct),
+    "License Usage Trend: " & SelectedProduct,
+    "Please select a product to view license usage trend"
+)
+
+
