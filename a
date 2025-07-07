@@ -16,16 +16,12 @@ IF(
 
 
 
-
 ShowTrendLine = 
 IF(
-   ISFILTERED('YourProductTable'[Product]),
-   1,
-   BLANK()
+    ISFILTERED('Product_Metadata'[Product]),
+    1,
+    BLANK()
 )
-
-
-
 
 
 
