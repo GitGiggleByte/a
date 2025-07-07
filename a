@@ -5,3 +5,22 @@ IF (
     1,
     BLANK()
 )
+
+
+
+
+
+ShowTrendLine = 
+VAR SelectedProduct =
+    SELECTEDVALUE('Product_Metadata'[Product])
+
+RETURN
+IF (
+    NOT ISBLANK(SelectedProduct) &&
+    CALCULATE (
+        DISTINCTCOUNT('License_Usage'[Product]),
+        TREATAS( { SelectedProduct }, 'License_Usage'[Product] )
+    ) = 1,
+    1,
+    BLANK()
+)
