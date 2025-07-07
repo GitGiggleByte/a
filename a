@@ -1,38 +1,7 @@
-Product Selected Check = 
-IF(
-   ISFILTERED('YourProductTable'[Product]), 
-   1, 
-   0
-)
-
-
-
-
-
 ShowTrendLine = 
-IF(
-    ISFILTERED('Product_Metadata'[Product]),
-    1,
-    BLANK()
-)
-
-
-
-ShowTrendLine =
-IF(
-    HASONEVALUE('Product_Metadata'[Product]),
-    1,
-    BLANK()
-)
-
-
-
-ShowTrendLine =
 IF (
-    HASONEVALUE('License_Usage'[Product]),
+    HASONEFILTER('License_Usage'[Product]) &&
+    DISTINCTCOUNT('License_Usage'[Product]) = 1,
     1,
     BLANK()
 )
-
-
-
