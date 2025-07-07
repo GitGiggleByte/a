@@ -1,6 +1,37 @@
-Product Selected Check =
-IF (
-    HASONEVALUE ( 'License_Usage'[Product] ),
-    1,
-    0
+Product Selected Check = 
+IF(
+   ISFILTERED('YourProductTable'[Product]), 
+   1, 
+   0
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+ShowTrendLine = 
+IF(
+   ISFILTERED('YourProductTable'[Product]),
+   1,
+   BLANK()
+)
+
+
+
+
+
+
+
+
+
+
+
+
