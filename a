@@ -1,90 +1,79 @@
-ShowTrendLine in License_Usage table
 
-WORKED but nothing displayed
+License_Usage
 
-ShowTrendLine = 
-IF (
-    HASONEFILTER('License_Usage'[Product]) &&
-    DISTINCTCOUNT('License_Usage'[Product]) = 1,
-    1,
-    BLANK()
-)
-
-
-DIDN'T WORK as a try to improve the above. All products were displayed.
-
-
-ShowTrendLine = 
-VAR SelectedProduct =
-    SELECTEDVALUE('Product_Metadata'[Product])
-
-RETURN
-IF (
-    NOT ISBLANK(SelectedProduct) &&
-    CALCULATE (
-        DISTINCTCOUNT('License_Usage'[Product]),
-        TREATAS( { SelectedProduct }, 'License_Usage'[Product] )
-    ) = 1,
-    1,
-    BLANK()
-)
-
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-NEW APPROACH
-------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------
-
-
-License Usage by Day (Filtered) =
-VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
-RETURN
-IF (
-    NOT ISBLANK(SelectedProduct),
-    CALCULATE (
-        SUM('License_Usage'[Usage]),
-        'License_Usage'[Product] = SelectedProduct
-    )
-)
-
-
-Remove ShowTrendLine Filter from the Visual
-
-    Delete ShowTrendLine from the Filters on this visual
-
-    We no longer need to filter the visual itself — the measure does all the work
-
-
-License Usage by Day (Filtered) = 
-VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
-RETURN
-IF (
-    NOT ISBLANK(SelectedProduct),
-    CALCULATE (
-        SUM('License_Usage'[Usage]),
-        TREATAS( { SelectedProduct }, 'License_Usage'[Product] )
-    )
-)
-
-
-
-Product Filter Gate = 
-IF (
-    HASONEVALUE('Product_Metadata'[Product]),
-    SELECTEDVALUE('Product_Metadata'[Product]),
-    BLANK()
-)
+| Name                              | Type    | Description                                                         | Status                                          |
+| --------------------------------- | ------- | ------------------------------------------------------------------- | ----------------------------------------------- |
+| `Product Selected Check`          | Measure | Checks if a product is selected (`ISFILTERED`)                      | ❌ Not used — can delete (was part of old logic) |
+| `ShowTrendLine`                   | Measure | Tried to hide trend visual using visual filter                      | ❌ Not used — can delete (no longer needed)      |
+| `License Usage by Day`            | Measure | Original usage aggregation                                          | ❌ Replaced                                      |
+| `License Usage by Day (Filtered)` | Measure | Shows usage only when a single product is selected, using `TREATAS` | ✅ **Used** in the Y-axis of trend chart         |
+| `Trend Chart Title`               | Measure | Dynamic title for the trend chart based on selected product         | ✅ **Used** in card visual above chart           |
 
 
 
 
-Trend Chart Title = 
-VAR SelectedProduct = SELECTEDVALUE('Product_Metadata'[Product])
-RETURN
-IF (
-    NOT ISBLANK(SelectedProduct),
-    "License Usage Trend: " & SelectedProduct,
-    "Please select a product to view license usage trend"
-)
+
+Product_Metadata
+
+| Name                   | Type           | Description                                            | Status                           |
+| ---------------------- | -------------- | ------------------------------------------------------ | -------------------------------- |
+| `% Licenses Used`      | Measure        | License consumption percent                            | ✅ Used in multiple visuals       |
+| `Display Product`      | Calculated Col | Possibly a cleaned version of `Product` name           | ❓ Check — used in visuals or not |
+| `License Alert`        | Calculated Col | Possibly flags overuse                                 | ✅ Used in alerts/smart summary   |
+| `Smart Alert Count`    | Measure        | Total count of overuse alerts                          | ✅ Used in summary card           |
+| `Smart Total Products` | Measure        | Count of all products under Smart license logic        | ✅ Used in summary card           |
+| `Product`              | Column         | The main product field, core to slicers and drilldowns | ✅ Used throughout                |
 
 
+
+
+Proposed Definition of Done – CI/CD Orchestration (Common Standard)
+
+For any user story, task, or feature to be considered Done, the following criteria must be met:
+✅ 1. Functional Completion
+
+    Business and technical requirements are fully implemented.
+
+    Story acceptance criteria are met and verified by the Product Owner.
+
+    All functional testing is complete (unit, integration, system).
+
+✅ 2. Documentation & Traceability
+
+    All required documentation (e.g., implementation notes, changes made, impacted systems) is updated.
+
+    Relevant records are stored in the correct repository (e.g., Confluence, SharePoint, or system of record).
+
+    Jira ticket is updated with final status, comments, and references to any linked tasks, exceptions, or approvals.
+
+✅ 3. Security, Risk, and Compliance Checks
+
+    Security review is completed if required (based on classification or impact).
+
+    Policy Exceptions (PEs) or Deferred Remediation Dates (DRDs) are submitted and linked if full compliance cannot be achieved.
+
+    Patch compliance (if applicable) is validated or exemption tracked.
+
+    Any control-related evidence (e.g., audit readiness) is captured and stored.
+
+✅ 4. Stakeholder Communication
+
+    Relevant stakeholders (Product Owner, requestors, downstream consumers) have been notified of completion.
+
+    Status has been reflected in any required dashboards or status reports (if part of KR1/KR3 deliverables).
+
+✅ 5. Integration and Deployment
+
+    Code or configuration is merged, built, and deployed to the appropriate environment(s).
+
+    Automated CI/CD pipelines have run successfully.
+
+    Rollback steps are documented if required.
+
+✅ 6. Validation & Post-Completion
+
+    Validated in production or designated test environment (if post-release validation is applicable).
+
+    Any known limitations or future enhancements are captured in backlog.
+
+    Story is ready for audit review (where applicable) with supporting artifacts attached or linked.
